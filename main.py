@@ -5,9 +5,9 @@ from maze import Maze
 from graphics import Window
 
 def main():
-    window = Window(1920, 1080)
+    window = Window(1900, 1000)
     # Create cells
-    maze = Maze(20, 20, 20,30, 50, 50, window)
+    maze = Maze(20, 20, 20,30, 40, 40, window)
 
     window.wait_for_close()
 

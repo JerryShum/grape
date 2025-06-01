@@ -16,7 +16,6 @@ class Cell:
         if self.__win is None:
             return
             
-        
         self.__x1 = x1
         self.__x2 = x2
         self.__y1 = y1
@@ -28,14 +27,25 @@ class Cell:
             
             line = Line(point1, point2)
             self.__win.draw_line(line, "black")
-           
-
+        else:
+            point1 = Point(x1, y1)
+            point2 = Point(x1, y2)
+            
+            line = Line(point1, point2)
+            self.__win.draw_line(line, "#d9d9d9")
+            
         if self.has_right_wall:
             point1 = Point(x2, y1)
             point2 = Point(x2, y2)
 
             line = Line(point1, point2)
             self.__win.draw_line(line, "black")
+        else:
+            point1 = Point(x2, y1)
+            point2 = Point(x2, y2)
+
+            line = Line(point1, point2)
+            self.__win.draw_line(line, "#d9d9d9")
 
 
         if self.has_top_wall:
@@ -44,6 +54,12 @@ class Cell:
 
             line = Line(point1, point2)
             self.__win.draw_line(line, "black")
+        else:
+            point1 = Point(x1, y1)
+            point2 = Point(x2, y1)
+
+            line = Line(point1, point2)
+            self.__win.draw_line(line, "#d9d9d9")
 
 
         if self.has_bottom_wall:
@@ -52,6 +68,12 @@ class Cell:
 
             line = Line(point1, point2)
             self.__win.draw_line(line, "black")
+        else:
+            point1 = Point(x1, y2)
+            point2 = Point(x2, y2)
+
+            line = Line(point1, point2)
+            self.__win.draw_line(line, "#d9d9d9")
     
     def draw_move(self, to_cell, undo=False):
         half_length = abs(self.__x2 - self.__x1) // 2

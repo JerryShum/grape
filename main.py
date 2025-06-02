@@ -7,7 +7,7 @@ from graphics import Window
 def main():
     window = Window(1900, 1000)
     # Create cells
-    maze = Maze(20, 20, 20,30, 40, 40, window)
+    maze = Maze(20, 20, 20,30, 40, 40, window, 2)
 
     window.wait_for_close()
 

@@ -1,16 +1,14 @@
-#!/usr/bin/env python3
-
-from tkinter import Tk, BOTH, Canvas
+from graphics import Window, Line, Point
 from maze import Maze
-from graphics import Window
+from cell import Cell
 
 def main():
-    window = Window(1900, 1000)
-    # Create cells
-    maze = Maze(20, 20, 20,30, 40, 40, window, 100)
+    win = Window("Sigma", 1000, 1000)
+    
+    maze = Maze(10,10,10,10,30,30,win, 4)
     maze.solve()
-
-    window.wait_for_close()
+   
+    win.wait_for_close()
+    
 
 main()
-

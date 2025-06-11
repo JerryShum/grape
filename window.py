@@ -16,6 +16,8 @@ class Window:
         self.__root.title(self.title)
         self.__root.protocol("WM_DELETE_WINDOW", self.close)
         
+        self.maze = None
+        
         #! Canvas for drawing
         self.canvas = Canvas(self.__root, bg="white", width=self.width, height=self.height)
         self.canvas.pack(fill=BOTH, expand=True)
@@ -31,6 +33,11 @@ class Window:
         self.clearButton.config(command=self.clear_canvas)
         self.clearButton.pack()
         
+        #! Button for solving the maze
+        self.solveButton = Button(self.__root, text="Solve Maze")
+        self.solveButton.config(command=self.solve_maze)
+        self.solveButton.pack()
+        
         
         self.windowRunning = False
 
@@ -38,10 +45,13 @@ class Window:
     def create_maze(self):
         if self.createButtonPress == False:
             self.createButtonPress = True
-            maze = Maze(10,10,10,10,30,30,self, 4)
-            maze.solve()
+            self.maze = Maze(10,10,10,10,30,30,self, 4)
         else:
             return
+    
+    def solve_maze(self):
+        if self.maze != None:
+            self.maze.solve()
     
     def clear_canvas(self):
         self.canvas.delete("all")

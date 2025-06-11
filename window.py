@@ -17,29 +17,71 @@ class Window:
         self.__root.protocol("WM_DELETE_WINDOW", self.close)
         
         self.maze = None
-        
-        #! Canvas for drawing
-        self.canvas = Canvas(self.__root, bg="white", width=self.width, height=self.height)
-        self.canvas.pack(fill=BOTH, expand=True)
-        
-        #! Button for generating maze
-        self.createButton = Button(self.__root, text="Create Maze")
-        self.createButton.config(command=self.create_maze)
-        self.createButton.pack()
-        self.createButtonPress = False
-        
-        #! Button for clearing the canvas
-        self.clearButton = Button(self.__root, text="Clear Canvas")
-        self.clearButton.config(command=self.clear_canvas)
-        self.clearButton.pack()
-        
-        #! Button for solving the maze
-        self.solveButton = Button(self.__root, text="Solve Maze")
-        self.solveButton.config(command=self.solve_maze)
-        self.solveButton.pack()
-        
-        
         self.windowRunning = False
+        
+        #@ Creating input and maze screens
+        self.inputFrame = Frame(self.__root)
+        self.mazeFrame = Frame(self.__root)
+                
+        self.setup_input_screen()
+        self.setup_maze_screen()
+        
+        self.inputFrame.pack()
+
+        
+        # #! Button for generating maze
+        # self.createButton = Button(self.__root, text="Create Maze")
+        # self.createButton.config(command=self.create_maze)
+        # self.createButton.pack()
+        # self.createButtonPress = False
+        
+    def setup_input_screen(self):
+        #! Input Screen
+        Label(self.inputFrame, text="Maze Size").pack()
+        Label(self.inputFrame, text="Rows").pack()
+        self.rowInput = Entry(self.inputFrame)
+        self.rowInput.pack()
+        
+        Label(self.inputFrame, text="Columns").pack()
+        self.colInput = Entry(self.inputFrame)
+        self.colInput.pack()
+        
+        start_button = Button(self.inputFrame, text="Generate Maze", command=self.start_maze_screen)
+        start_button.pack()
+    
+    def setup_maze_screen(self):
+        # Canvas
+        self.canvas = Canvas(self.mazeFrame, bg="white", width=self.width, height=self.height)
+        self.canvas.pack()
+
+        # Buttons
+        self.solveButton = Button(self.mazeFrame, text="Solve Maze", command=self.solve_maze)
+        self.solveButton.pack()
+
+        self.clearButton = Button(self.mazeFrame, text="Clear & Back", command=self.back_to_input_screen)
+        self.clearButton.pack()
+    
+    def start_maze_screen(self):
+        try:
+            rows = int(self.rowInput.get())
+            cols = int(self.colInput.get())
+            
+        except ValueError:
+            print("Invalid input")
+            return
+
+        self.createButtonPress = True
+
+        self.inputFrame.pack_forget()
+        self.mazeFrame.pack()
+
+        self.maze = Maze(10, 10, rows, cols, 10, 10, self, 0.5)
+    
+    def back_to_input_screen(self):
+        self.canvas.delete("all")
+        self.createButtonPress = False
+        self.mazeFrame.pack_forget()
+        self.inputFrame.pack()
 
     #! Function for button callback
     def create_maze(self):
@@ -74,4 +116,3 @@ class Window:
     def close(self):
         self.windowRunning = False
                 
-

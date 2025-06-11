@@ -21,16 +21,31 @@ class Window:
         self.canvas.pack(fill=BOTH, expand=True)
         
         #! Button for generating maze
-        self.button = Button(self.__root, text="Create Maze")
-        self.button.config(command=self.create_maze)
-        self.button.pack()
+        self.createButton = Button(self.__root, text="Create Maze")
+        self.createButton.config(command=self.create_maze)
+        self.createButton.pack()
+        self.createButtonPress = False
+        
+        #! Button for clearing the canvas
+        self.clearButton = Button(self.__root, text="Clear Canvas")
+        self.clearButton.config(command=self.clear_canvas)
+        self.clearButton.pack()
+        
         
         self.windowRunning = False
 
     #! Function for button callback
     def create_maze(self):
-        maze = Maze(10,10,10,10,30,30,self, 4)
-        maze.solve()
+        if self.createButtonPress == False:
+            self.createButtonPress = True
+            maze = Maze(10,10,10,10,30,30,self, 4)
+            maze.solve()
+        else:
+            return
+    
+    def clear_canvas(self):
+        self.canvas.delete("all")
+        self.createButtonPress = False
     
     def draw_line(self, line, fill_color):
         line.draw(self.canvas, fill_color)
